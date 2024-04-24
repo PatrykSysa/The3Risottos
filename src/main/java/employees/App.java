@@ -1,16 +1,22 @@
 package employees;
 
+import logging.LoggerConfig;
+
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App {
+    private static Logger logger = LoggerConfig.configure(App.class.getName());
     public static void main(String[] args) {
         // utils/generateRandomEmployeeSize (final/constant)
         int count = 10;
 
-
+        logger.info("RUNNING");
+        logger.info("RUNNING 2");
         // EmployeeFactory called here
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(Arrays.toString(EmployeeFactory.getEmployees(count)));
+        logger.info(System.getProperty("user.dir"));
+        logger.info(Arrays.toString(EmployeeFactory.getEmployees(count)));
 
 
         // pass string array into utils/parseData
