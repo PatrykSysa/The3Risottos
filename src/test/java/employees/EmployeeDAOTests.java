@@ -56,4 +56,40 @@ class EmployeeDAOTests {
         Assertions.assertEquals(expected, dao.getByHiredDateRange(start, end));
     }
 
+    @Test
+    @DisplayName("Given a range of ages that overlaps with the age of an employee, getByAgeRange returns a list containing that employee")
+    void givenARangeOfAgesThatOverlapsWithTheAgeOfAnEmployeeGetByAgeRangeReturnsAListContainingThatEmployee() {
+        int lower = 30; int higher = 40;
+        List<Employee> expected = List.of(employees.get(1));
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given a range of ages that overlaps the ages of all employees, getByAgeRange returns a list of all employees")
+    void givenARangeOfAgesThatOverlapsTheAgesOfAllEmployeesGetByAgeRangeReturnsAListOfAllEmployees() {
+        int lower = 10; int higher = 100;
+        List<Employee> expected = employees;
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given a range of ages that overlaps the ages of none of the employees, getByAgeRange returns an empty list")
+    void givenARangeOfAgesThatOverlapsTheAgesOfNoneOfTheEmployeesGetByAgeRangeReturnsAnEmptyList() {
+        int lower = 5; int higher = 10;
+        List<Employee> expected = List.of();
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given one or more ages that are less than 0, getByAgeRange throws an exception")
+    void givenOneOrMoreAgesThatAreLessThan0GetByAgeRangeThrowsAnException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(-1, 20));
+    }
+
+    @Test
+    @DisplayName("Given an upper age that is less than the lower age, getByAgeRange throws an exception")
+    void givenAnUpperAgeThatIsLessThanTheLowerAgeGetByAgeRangeThrowsAnException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(20, 10));
+    }
+
 }

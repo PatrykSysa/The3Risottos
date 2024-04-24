@@ -1,11 +1,15 @@
 package employees;
 
+import logging.LoggerConfig;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class EmployeeDAO {
     private List<Employee> employees;
+    private final Logger LOGGER = LoggerConfig.configure(EmployeeDAO.class.getName());
 
     public EmployeeDAO(List<Employee> employees) {
         this.employees = employees;
@@ -28,11 +32,45 @@ public class EmployeeDAO {
         List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
             LocalDate hiredDate = employee.getDateOfJoin();
-            if (hiredDate.isAfter(start) && hiredDate.isBefore(end)) {
+            if (isWithinDateRange(hiredDate, start, end)) {
                 result.add(employee);
             }
         }
         return result;
+    }
+
+    public List<Employee> getByAgeRange(int lowerAge, int upperAge) {
+        checkAgesAreValid(lowerAge, upperAge);
+        List<Employee> result = new ArrayList<>();
+        LocalDate start = minusYearsFromPresent(upperAge);
+        LocalDate end = minusYearsFromPresent(lowerAge);
+        LOGGER.info("Searching for DOB between " + start + " and " + end);
+        for (Employee employee : employees) {
+            if (isWithinDateRange(employee.getDateOfBirth(), start, end)) {
+                result.add(employee);
+            }
+        }
+        return result;
+    }
+
+    private void checkAgesAreValid(int lowerAge, int upperAge) {
+        if (lowerAge < 0) {
+            throw new IllegalArgumentException("Ages cannot be negative");
+        } else if (upperAge < lowerAge) {
+            throw new IllegalArgumentException("The upper age must be greater than the lower age");
+        }
+    }
+
+    private LocalDate minusYearsFromPresent(int years) {
+        LocalDate current = LocalDate.now();
+        return current.minusYears(years);
+    }
+
+    private boolean isWithinDateRange(LocalDate query, LocalDate start, LocalDate end) {
+        LOGGER.finer("Testing if " + query + " is between " + start + " and " + end);
+        boolean isAfterStart = query.isAfter(start);
+        boolean isBeforeEnd = query.isBefore(end);
+        return isAfterStart && isBeforeEnd;
     }
 
 }
