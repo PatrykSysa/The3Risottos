@@ -61,7 +61,7 @@ class EmployeeDAOTests {
     void givenID222222GetAliceSmith() {
         Employee expected = new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
                 "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
-                LocalDate.of(2015, 10, 1));
+                LocalDate.of(2015, 10, 1), 40000);
         Assertions.assertEquals(expected, dao.getById(222222));
     }
 
