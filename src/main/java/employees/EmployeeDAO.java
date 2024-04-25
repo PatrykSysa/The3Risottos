@@ -30,7 +30,7 @@ public class EmployeeDAO {
         for (Employee employee : employees) {
             LOGGER.fine("current employee id is: " + employee.getEmpId());
 
-            if (employee.getEmpId() == employeeId) {
+            if (checkEmployeeMatchesId(employee.getEmpId(), employeeId)) {
                 LOGGER.finer("Seems employee id: " + employee.getEmpId() + " is equal to: " + employeeId);
                 return employee;
             }
@@ -111,6 +111,10 @@ public class EmployeeDAO {
 
     private boolean checkLastNamePartiallyMatchesInput(String lastName, String partialMatchInput) {
         return (lastName.toLowerCase().contains(partialMatchInput.toLowerCase()));
+    }
+
+    private boolean checkEmployeeMatchesId(int employeeId, int searchedForId) {
+        return employeeId == searchedForId;
     }
 
 
