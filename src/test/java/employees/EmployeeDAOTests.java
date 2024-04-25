@@ -19,13 +19,13 @@ class EmployeeDAOTests {
         employees = new ArrayList<>();
         employees.add(new Employee(111111, "Mr", "Bob", "Jones", "M", "M",
                 "bob.jones@mail.com", LocalDate.of(1980, 6, 24),
-                LocalDate.of(2010, 9, 1)));
+                LocalDate.of(2010, 9, 1), 30000));
         employees.add(new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
                 "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
-                LocalDate.of(2015, 10, 1)));
+                LocalDate.of(2015, 10, 1), 40000));
         employees.add(new Employee(333333, "Dr", "Eve", "Brown", "S", "F",
                 "eve.brown@mail.com", LocalDate.of(1976, 4, 15),
-                LocalDate.of(2005, 4, 1)));
+                LocalDate.of(2005, 4, 1), 50000));
         dao = new EmployeeDAO(employees);
     }
 
@@ -70,6 +70,42 @@ class EmployeeDAOTests {
     void givenID1ReturnNull() {
         Employee expected = null;
         Assertions.assertEquals(expected, dao.getById(1));
+    }
+
+    @Test
+    @DisplayName("Given a range of ages that overlaps with the age of an employee, getByAgeRange returns a list containing that employee")
+    void givenARangeOfAgesThatOverlapsWithTheAgeOfAnEmployeeGetByAgeRangeReturnsAListContainingThatEmployee() {
+        int lower = 30; int higher = 40;
+        List<Employee> expected = List.of(employees.get(1));
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given a range of ages that overlaps the ages of all employees, getByAgeRange returns a list of all employees")
+    void givenARangeOfAgesThatOverlapsTheAgesOfAllEmployeesGetByAgeRangeReturnsAListOfAllEmployees() {
+        int lower = 10; int higher = 100;
+        List<Employee> expected = employees;
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given a range of ages that overlaps the ages of none of the employees, getByAgeRange returns an empty list")
+    void givenARangeOfAgesThatOverlapsTheAgesOfNoneOfTheEmployeesGetByAgeRangeReturnsAnEmptyList() {
+        int lower = 5; int higher = 10;
+        List<Employee> expected = List.of();
+        Assertions.assertEquals(expected, dao.getByAgeRange(lower, higher));
+    }
+
+    @Test
+    @DisplayName("Given one or more ages that are less than 0, getByAgeRange throws an exception")
+    void givenOneOrMoreAgesThatAreLessThan0GetByAgeRangeThrowsAnException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(-1, 20));
+    }
+
+    @Test
+    @DisplayName("Given an upper age that is less than the lower age, getByAgeRange throws an exception")
+    void givenAnUpperAgeThatIsLessThanTheLowerAgeGetByAgeRangeThrowsAnException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(20, 10));
     }
 
 
