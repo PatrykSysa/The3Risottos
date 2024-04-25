@@ -7,8 +7,8 @@ import java.util.List;
 public class EmployeeTableFormatter implements EmployeeFormatter {
 
     private final String HEADER = """
-                | ID | First Name | Last Name |
-                ===============================
+                | ID | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
+                ============================================================================================
                 """;
 
     @Override
@@ -24,6 +24,12 @@ public class EmployeeTableFormatter implements EmployeeFormatter {
     private String formatLine(Employee employee) {
         return "| %d ".formatted(employee.getEmpId())
                 + "| %s ".formatted(employee.getFirstName())
-                + "| %s |\n".formatted(employee.getLastName());
+                + "| %s ".formatted(employee.getLastName())
+                + "| %s ".formatted(employee.getMiddleInitial())
+                + "| %s ".formatted(employee.getGender())
+                + "| %s ".formatted(employee.getEmail())
+                + "| %s ".formatted(employee.getDateOfBirth())
+                + "| %s ".formatted(employee.getDateOfJoin())
+                + "| %d |\n".formatted(employee.getSalary());
     }
 }

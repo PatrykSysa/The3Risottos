@@ -34,9 +34,9 @@ class EmployeeTableFormatterTests {
     void givenAListContainingASingleEmployeeFormatReturnsAStringContainingATableOfDataForThatEmployee() {
         List<Employee> singleEmployee = List.of(employees.get(0));
         String expected = """
-                | ID | First Name | Last Name |
-                ===============================
-                | 111111 | Bob | Jones |
+                | ID | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
+                ============================================================================================
+                | 111111 | Bob | Jones | M | M | bob.jones@mail.com | 1980-06-24 | 2010-09-01 | 30000 |
                 """;
         Assertions.assertEquals(expected, formatter.format(singleEmployee));
     }
