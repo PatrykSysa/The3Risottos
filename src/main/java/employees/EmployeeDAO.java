@@ -16,14 +16,10 @@ public class EmployeeDAO {
     public EmployeeDAO(List<Employee> employees) {
         this.employees = employees;
     }
-//
-//
-//
-//
-//    public createEmployeeDAO(Employee e) {
-//
-//    }
-//
+
+    public List<Employee> getAllEmployees() {
+        return employees;
+    }
 
     public Employee getById(int employeeId) {
         LOGGER.info("getById method started, looking for:" +employeeId);

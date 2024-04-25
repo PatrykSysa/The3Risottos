@@ -20,6 +20,10 @@ public class EmployeeQueryRunner {
         printer = new EmployeePrinter(new EmployeeTableFormatter());
     }
 
+    public void getAll() {
+        printer.print(dao.getAllEmployees());
+    }
+
     public void getById(int employeeId) {
         Employee found = dao.getById(employeeId);
         List<Employee> foundList = found == null ? List.of() : List.of(found);
@@ -37,7 +41,11 @@ public class EmployeeQueryRunner {
     }
     
     public void getByAgeRange(int lowerAge, int upperAge) {
-        List<Employee> employees = dao.getByAgeRange(lowerAge, upperAge);
-        printer.print(employees);
+        try {
+            List<Employee> employees = dao.getByAgeRange(lowerAge, upperAge);
+            printer.print(employees);
+        } catch (IllegalArgumentException error) {
+            System.out.println("Error: " + error.getMessage());
+        }
     }
 }
