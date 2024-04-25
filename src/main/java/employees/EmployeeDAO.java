@@ -9,7 +9,9 @@ import java.util.logging.Logger;
 
 public class EmployeeDAO {
     private List<Employee> employees;
+
     private final Logger LOGGER = LoggerConfig.configure(EmployeeDAO.class.getName());
+
 
     public EmployeeDAO(List<Employee> employees) {
         this.employees = employees;
@@ -22,9 +24,21 @@ public class EmployeeDAO {
 //
 //    }
 //
-//    public Employee getById(Employee e) {
-//
-//    }
+
+    public Employee getById(int employeeId) {
+        LOGGER.info("getById method started, looking for:" +employeeId);
+        for (Employee employee : employees) {
+            LOGGER.fine("current employee id is: " + employee.getEmpId());
+
+            if (employee.getEmpId() == employeeId) {
+                LOGGER.finer("Seems employee id: " + employee.getEmpId() + " is equal to: " + employeeId);
+                return employee;
+            }
+        }
+        LOGGER.info("no employee found?");
+        return null;
+    }
+
 //    public Employee getByLastNamePartial(Employee e) {
 //
 //    }

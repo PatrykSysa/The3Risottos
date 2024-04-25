@@ -23,7 +23,7 @@ class EmployeeDAOTests {
         employees.add(new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
                 "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
                 LocalDate.of(2015, 10, 1), 40000));
-        employees.add(new Employee(111111, "Dr", "Eve", "Brown", "S", "F",
+        employees.add(new Employee(333333, "Dr", "Eve", "Brown", "S", "F",
                 "eve.brown@mail.com", LocalDate.of(1976, 4, 15),
                 LocalDate.of(2005, 4, 1), 50000));
         dao = new EmployeeDAO(employees);
@@ -54,6 +54,22 @@ class EmployeeDAOTests {
         LocalDate end = LocalDate.of(2021, 1, 1);
         List<Employee> expected = List.of();
         Assertions.assertEquals(expected, dao.getByHiredDateRange(start, end));
+    }
+
+    @Test
+    @DisplayName("Given an id of 222222, get mrs alice smith")
+    void givenID222222GetAliceSmith() {
+        Employee expected = new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
+                "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
+                LocalDate.of(2015, 10, 1));
+        Assertions.assertEquals(expected, dao.getById(222222));
+    }
+
+    @Test
+    @DisplayName("Given id of 1, should return null")
+    void givenID1ReturnNull() {
+        Employee expected = null;
+        Assertions.assertEquals(expected, dao.getById(1));
     }
 
     @Test
@@ -91,5 +107,6 @@ class EmployeeDAOTests {
     void givenAnUpperAgeThatIsLessThanTheLowerAgeGetByAgeRangeThrowsAnException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(20, 10));
     }
+
 
 }
