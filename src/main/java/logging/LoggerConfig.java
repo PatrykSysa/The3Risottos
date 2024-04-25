@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.util.logging.*;
 
 public class LoggerConfig {
+
+    private static Level levelForConsole = Level.ALL;
+    private static Level levelForFile = Level.ALL;
+
     public static Logger configure(String className) {
-        return configure(className, Level.ALL, Level.ALL);
+        return configure(className, levelForConsole, levelForFile);
     }
     
     public static Logger configure(String className, Level levelForConsole, Level levelForFile) {
@@ -30,5 +34,13 @@ public class LoggerConfig {
         LOGGER.addHandler(fileHandler);
 
         return LOGGER;
+    }
+
+    public static void setLevelForConsole(Level levelForConsole) {
+        LoggerConfig.levelForConsole = levelForConsole;
+    }
+
+    public static void setLevelForFile(Level levelForFile) {
+        LoggerConfig.levelForFile = levelForFile;
     }
 }
