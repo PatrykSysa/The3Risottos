@@ -7,7 +7,7 @@ import java.util.List;
 public class EmployeeTableFormatter implements EmployeeFormatter {
 
     private final String HEADER = """
-                | ID | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
+                | ID | Prefix | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
                 ============================================================================================
                 """;
 
@@ -23,6 +23,7 @@ public class EmployeeTableFormatter implements EmployeeFormatter {
 
     private String formatLine(Employee employee) {
         return "| %d ".formatted(employee.getEmpId())
+                + "| %s ".formatted(employee.getPrefix())
                 + "| %s ".formatted(employee.getFirstName())
                 + "| %s ".formatted(employee.getLastName())
                 + "| %s ".formatted(employee.getMiddleInitial())

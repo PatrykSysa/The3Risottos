@@ -24,9 +24,6 @@ class EmployeeTableFormatterTests {
         employees.add(new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
                 "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
                 LocalDate.of(2015, 10, 1), 40000));
-        employees.add(new Employee(333333, "Dr", "Eve", "Brown", "S", "F",
-                "eve.brown@mail.com", LocalDate.of(1976, 4, 15),
-                LocalDate.of(2005, 4, 1), 50000));
     }
 
     @Test
@@ -34,11 +31,24 @@ class EmployeeTableFormatterTests {
     void givenAListContainingASingleEmployeeFormatReturnsAStringContainingATableOfDataForThatEmployee() {
         List<Employee> singleEmployee = List.of(employees.get(0));
         String expected = """
-                | ID | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
+                | ID | Prefix | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
                 ============================================================================================
-                | 111111 | Bob | Jones | M | M | bob.jones@mail.com | 1980-06-24 | 2010-09-01 | 30000 |
+                | 111111 | Mr | Bob | Jones | M | M | bob.jones@mail.com | 1980-06-24 | 2010-09-01 | 30000 |
                 """;
         Assertions.assertEquals(expected, formatter.format(singleEmployee));
+    }
+
+    @Test
+    @DisplayName("Given a list containing multiple employees, format returns a string containing a table of data for those employees")
+    void givenAListContainingMultipleEmployeesFormatReturnsAStringContainingATableOfDataForThoseEmployees() {
+        String expected = """
+                | ID | Prefix | First Name | Last Name | Middle Initial | Gender | Email | DOB | Hire Date | Salary |
+                ============================================================================================
+                | 111111 | Mr | Bob | Jones | M | M | bob.jones@mail.com | 1980-06-24 | 2010-09-01 | 30000 |
+                | 222222 | Mrs | Alice | Smith | C | F | alice.smith@mail.com | 1990-11-05 | 2015-10-01 | 40000 |
+                """;
+
+        Assertions.assertEquals(expected, formatter.format(employees));
     }
 
 }
