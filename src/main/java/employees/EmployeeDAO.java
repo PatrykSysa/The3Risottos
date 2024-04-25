@@ -39,9 +39,31 @@ public class EmployeeDAO {
         return null;
     }
 
-//    public Employee getByLastNamePartial(Employee e) {
-//
-//    }
+    public List<Employee> getByLastNamePartial(String lastNamePartial) {
+        LOGGER.info("getting last name by partial match started");
+        List<Employee> employeesFound = new ArrayList<>();
+
+        LOGGER.info("checking if input empty");
+        if (lastNamePartial.isEmpty()) {
+            LOGGER.fine("returning empty arraylist because input is empty");
+            return employeesFound;
+        }
+
+        for (Employee employee : employees) {
+            LOGGER.fine("looping through employees");
+            LOGGER.fine("checking if: " + lastNamePartial + " partially matches:" + employee.getLastName());
+
+            if (checkLastNamePartiallyMatchesInput(employee.getLastName(), lastNamePartial)) {
+                LOGGER.finer("partial match found");
+                employeesFound.add(employee);
+            }
+        }
+
+        LOGGER.info("list of employees partially matching completed");
+        return employeesFound;
+
+
+    }
     public List<Employee> getByHiredDateRange(LocalDate start, LocalDate end) {
         List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
@@ -86,5 +108,10 @@ public class EmployeeDAO {
         boolean isBeforeEnd = query.isBefore(end);
         return isAfterStart && isBeforeEnd;
     }
+
+    private boolean checkLastNamePartiallyMatchesInput(String lastName, String partialMatchInput) {
+        return (lastName.toLowerCase().contains(partialMatchInput.toLowerCase()));
+    }
+
 
 }

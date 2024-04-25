@@ -108,5 +108,32 @@ class EmployeeDAOTests {
         Assertions.assertThrows(IllegalArgumentException.class, () -> dao.getByAgeRange(20, 10));
     }
 
+    @Test
+    @DisplayName("Given employees partially match S in last name, return employee")
+    void GivenPartialLastNameMatchOfS() {
+        List<Employee> employeesTest = new ArrayList<>();
+        employeesTest.add(new Employee(111111, "Mr", "Bob", "Jones", "M", "M",
+                "bob.jones@mail.com", LocalDate.of(1980, 6, 24),
+                LocalDate.of(2010, 9, 1), 30000));
+        employeesTest.add(new Employee(222222, "Mrs", "Alice", "Smith", "C", "F",
+                "alice.smith@mail.com", LocalDate.of(1990, 11, 5),
+                LocalDate.of(2015, 10, 1), 40000));
+        Assertions.assertEquals(employeesTest, dao.getByLastNamePartial("S"));
+    }
+
+    @Test
+    @DisplayName("Given empty string, no employees should be found")
+    void givenEmptyStringGiveNoResults() {
+        List<Employee> emptyEmployees = new ArrayList<>();
+        Assertions.assertEquals(emptyEmployees, dao.getByLastNamePartial(""));
+    }
+
+    @Test
+    @DisplayName("Given input of ZZZ, no employees should be found")
+    void givenInputofZZZGiveNoResults() {
+        List<Employee> emptyEmployees = new ArrayList<>();
+        Assertions.assertEquals(emptyEmployees, dao.getByLastNamePartial("ZZZ"));
+    }
+
 
 }
