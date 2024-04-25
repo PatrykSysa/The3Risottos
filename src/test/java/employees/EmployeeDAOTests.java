@@ -30,6 +30,12 @@ class EmployeeDAOTests {
     }
 
     @Test
+    @DisplayName("Get all employees")
+    void getAllEmployees() {
+        Assertions.assertEquals(employees, dao.getAllEmployees());
+    }
+
+    @Test
     @DisplayName("Given a range of dates that overlaps with the hiring dates of some employees, getByHiredDateRange returns a list of those employees")
     void givenARangeOfDatesThatOverlapsWithTheHiringDatesOfSomeEmployeesGetByHiredDateRangeReturnsAListOfThoseEmployees() {
         LocalDate start = LocalDate.of(2015, 1, 1);
