@@ -11,8 +11,14 @@ public class EmployeeTableFormatter implements EmployeeFormatter {
                 ============================================================================================
                 """;
 
+
     @Override
     public String format(List<Employee> employees) {
+        if (employees.isEmpty()) return NO_RESULTS_MESSAGE;
+        return buildTable(employees);
+    }
+
+    private String buildTable(List<Employee> employees) {
         StringBuilder formatted = new StringBuilder(HEADER);
         for (Employee employee : employees) {
             String line = formatLine(employee);

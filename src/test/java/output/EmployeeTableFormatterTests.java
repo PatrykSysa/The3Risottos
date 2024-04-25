@@ -51,4 +51,12 @@ class EmployeeTableFormatterTests {
         Assertions.assertEquals(expected, formatter.format(employees));
     }
 
+    @Test
+    @DisplayName("Given an empty list, format returns a string saying that no matching results were found")
+    void givenAnEmptyListFormatReturnsAStringSayingThatNoMatchingResultsWereFound() {
+        List<Employee> emptyList = new ArrayList<>();
+        String expected = "No employees matching your query were found";
+        Assertions.assertEquals(expected, formatter.format(emptyList));
+    }
+
 }
