@@ -68,8 +68,7 @@ class EmployeeDAOTests {
     @Test
     @DisplayName("Given id of 1, should return null")
     void givenID1ReturnNull() {
-        Employee expected = null;
-        Assertions.assertEquals(expected, dao.getById(1));
+        Assertions.assertNull(dao.getById(1));
     }
 
     @Test
