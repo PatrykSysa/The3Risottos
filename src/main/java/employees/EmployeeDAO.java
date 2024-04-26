@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class EmployeeDAO {
+public class EmployeeDAO implements EmployeeRepository{
     private List<Employee> employees;
 
     private final Logger LOGGER = LoggerConfig.configure(EmployeeDAO.class.getName());
